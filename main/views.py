@@ -30,11 +30,11 @@ class UserApiAdd(generics.CreateAPIView):
 		user = serializer.save()
 		send_register_email.delay(user.email)
 
-class BookApiList(generics.ListCreateAPIView): 
+class BookApiList(generics.ListCreateAPIView): #получение книг(get) и добавление книги (post)
 	queryset = Book.objects.all()
 	serializer_class = BookSerializer
 
 
-class BookApiDetailView(generics.RetrieveUpdateDestroyAPIView): 
+class BookApiDetailView(generics.RetrieveUpdateDestroyAPIView): #получение информации о конкретной книге, изменение книги
 	queryset = Book.objects.all()
 	serializer_class = BookSerializer
