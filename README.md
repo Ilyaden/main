@@ -4,7 +4,7 @@
 2. Откройте файл myproject/settings.py\
    Найдите строчки\
    EMAIL_HOST_USER = 'your_mail'\
-   EMAIL_HOST_PASSWORD = 'your_password'\
+   EMAIL_HOST_PASSWORD = 'your_pass'\
    Введите данные от своей электронной почты(яндекс. все настройки сделаны именно для данного сервиса). Это нужно для отправки сообщений при регистрации
 
 3. Откройте консоль
