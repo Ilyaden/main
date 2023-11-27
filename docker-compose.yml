@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+
+  redis:
+    image: redis:latest
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "sleep 30 && python manage.py makemigrations &&
+             python manage.py migrate &&
+             echo 'from django.contrib.auth import get_user_model; User = get_user_model(); user = User.objects.create_superuser(username=\"123\", email=\"your_email@example.com\"); user.set_password(\"123\"); user.save()' | python manage.py shell &&
+             python manage.py runserver 0.0.0.0:8000"
+
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+
+  celery:
+    build:
+      context: .
+
+    command: celery -A myproject worker -l info
